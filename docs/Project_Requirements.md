@@ -34,8 +34,3 @@ To build a unified MERN-based dashboard that automates uploading, analyzing, and
 ## 📦 Future Enhancements
 - Email notification on new report upload.
 - Performance comparison between terms.
-
-
-
-
-
