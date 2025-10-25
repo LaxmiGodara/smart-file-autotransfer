@@ -35,16 +35,7 @@ To build a unified MERN-based dashboard that automates uploading, analyzing, and
 - Email notification on new report upload.
 - Performance comparison between terms.
 
-💾 Save the file and check Markdown preview for alignment.
 
 
-💻 Technical Task (You Will Do Independently)
-Initialize your local MERN project structure (if not done already).
-
-
-Verify folders like client/, server/, and docs/ exist.
-
-
-No code submission required today; just confirm setup.
 
 
