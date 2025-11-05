@@ -1,7 +1,12 @@
- // 👉 Step 1: Define a middleware for handling 404 (Not Found) routes
+ 
+// 👉 Step 1: Define a middleware for handling 404 (Not Found) routes
 // This function runs when no route matches the incoming request.
 // Example: if the user visits a URL that doesn’t exist like "/api/random",
 // this function sends a 404 response with a message.
+import { logError } from "./logger.js";
+
+
+
 export const notFound = (req, res, next) => {
   // Set the HTTP status code to 404 (Not Found)
   res.status(404).json({ message: "Route not found" });
@@ -13,6 +18,8 @@ export const notFound = (req, res, next) => {
 // Express automatically passes the "err" object here when next(err) is called.
 export const errorHandler = (err, req, res, next) => {
 
+   logError({ route: req.originalUrl, message: err.message });
+  res.status(res.statusCode || 500).json({ message: err.message });
   // Determine the status code:
   // If a status code is already set and not 200, use it;
   // otherwise, default to 500 (Internal Server Error)
