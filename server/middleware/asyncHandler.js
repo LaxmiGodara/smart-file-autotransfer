@@ -23,5 +23,5 @@ export const asyncHandler = (fn) => (req, res, next) => {
   // - If fn() returns a promise, it will resolve it.
   // - If an error occurs, it will be caught by .catch(next).
   // This way, Express’s built-in error middleware can handle it.
-  Promise.resolve(fn(req, res, next)).caught(next);
+  Promise.resolve(fn(req, res, next)).catch(next);
 };

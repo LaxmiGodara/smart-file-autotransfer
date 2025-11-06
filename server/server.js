@@ -26,14 +26,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use(notFound);
-app.use(errorHandler);
-
-
 // 👉 Step 5: Define API routes
 // This line means: whenever a request starts with "/api/upload",
 // Express should hand over the request to the uploadRoutes file.
 app.use("/api/upload", uploadRoutes);
+
+
+app.use(notFound);
+app.use(errorHandler);
+
+
 
 // 👉 Step 6: Connect to MongoDB and start the server
 // We wrap it inside an async function because connecting to MongoDB returns a Promise.
