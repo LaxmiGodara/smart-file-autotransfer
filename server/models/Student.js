@@ -34,6 +34,10 @@ const studentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+studentSchema.index({ roll: 1 });
+studentSchema.index({ subject: 1 });
+
+
 
 // 👉 Step 3: Create a model
 // A model acts as a bridge between our code and the actual MongoDB collection.
