@@ -1,3 +1,4 @@
+
 export const logClientError = (message, details = {}) => {
   const entry = {
     message,

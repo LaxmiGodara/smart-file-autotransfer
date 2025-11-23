@@ -1,59 +1,68 @@
-import React from 'react'
-
-export default function ResponseCard({ result }) {
-  const { message, totalRows, inserted, failed, errors, sample } = result
-
-  const cardStyle = {
-    background: '#f9fafb',
-    borderRadius: 8,
-    padding: 16,
-    boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-    fontFamily: 'system-ui, Arial'
+function formatNumber(value) {
+  if (typeof value !== "number" || Number.isNaN(value)) {
+    return "0";
   }
-
-  const statusColor =
-    failed === 0 ? '#22c55e' : failed < totalRows ? '#f59e0b' : '#ef4444'
-
-  return (
-    <div style={cardStyle}>
-      <h3 style={{ color: '#111827' }}>📊 Upload Summary</h3>
-      <p style={{ color: statusColor, fontWeight: 600 }}>{message}</p>
-
-      <ul style={{ lineHeight: 1.8 }}>
-        <li>📂 Total Rows: {totalRows}</li>
-        <li>✅ Inserted: {inserted}</li>
-        <li>⚠️ Failed: {failed}</li>
-      </ul>
-
-      {sample?.length > 0 && (
-        <div>
-          <h4>🧾 Sample Data</h4>
-          <pre
-            style={{
-              background: '#fff',
-              padding: 10,
-              borderRadius: 6,
-              overflowX: 'auto'
-            }}
-          >
-{JSON.stringify(sample, null, 2)}
-          </pre>
-        </div>
-      )}
-
-      {errors?.length > 0 && (
-        <div>
-          <h4 style={{ color: '#b91c1c' }}>🚨 Error Details</h4>
-          <ul>
-            {errors.map((err, i) => (
-              <li key={i}>
-                Row {err.row}: {err.issue}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  )
+  return value.toString();
 }
 
+export default function ResponseCard({
+  message,
+  fileName,
+  totalRows,
+  inserted,
+  failed
+}) {
+  const safeMessage = message || "Upload completed";
+  const safeFileName = fileName || "Not available";
+  const safeTotal = formatNumber(totalRows);
+  const safeInserted = formatNumber(inserted);
+  const safeFailed = formatNumber(failed);
+
+  const isSuccess = Number(failed) === 0;
+
+  return (
+    <div>
+      <div className="summary-header">
+        <span className="summary-icon">{isSuccess ? "✅" : "⚠️"}</span>
+        <h2 className="summary-title">Upload Summary</h2>
+      </div>
+      <p className={`summary-status ${isSuccess ? "success-text" : "error-text"}`}>
+        {safeMessage}
+      </p>
+      <div className="summary-rows">
+        <div className="summary-row">
+          <span className="summary-label summary-file">
+            <span className="summary-label-icon">📄</span>
+          File name
+          </span>
+          <span className="summary-colon">:</span>
+          <span className="summary-value summary-file">{safeFileName}</span>
+        </div>
+        <div className="summary-row">
+          <span className="summary-label">
+            <span className="summary-label-icon success-dot">●</span>
+            Total rows
+          </span>
+          <span className="summary-colon">:</span>
+          <span className="summary-value-number">{safeTotal}</span>
+        </div>
+        <div className="summary-row">
+          <span className="summary-label">
+            <span className="summary-label-icon success-dot">●</span>
+            Inserted
+          </span>
+          <span className="summary-colon">:</span>
+          <span className="summary-value-number">{safeInserted}</span>
+        </div>
+        <div className="summary-row">
+          <span className="summary-label">
+            <span className="summary-label-icon warn-dot">●</span>
+            Failed
+          </span>
+          <span className="summary-colon">:</span>
+          <span className="summary-value-number">{safeFailed}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
